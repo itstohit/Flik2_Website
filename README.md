@@ -73,13 +73,14 @@ To replace one, swap the `src` (and update the `alt` text). For production, cons
 Everything is plain text in the HTML files. Sections are marked with `<!-- ===== Section name ===== -->` comments.
 
 ### Update the stats
-Each animated number is a `data-count` attribute, e.g. `<span class="stat-num" data-count="120000">`. The counter animation in `script.js` reads that number; just change the attribute value. Stats appear on all three pages.
+Each animated number is a `data-count` attribute, e.g. `<span class="stat-num" data-count="12000">12,000+</span>`. The counter animation in `script.js` reads `data-count`; the element's text content is the no-JS fallback, so keep both in sync when editing. Stats appear on all three pages and are currently framed as waitlist/launch numbers to stay consistent with the "coming soon" state.
 
 ### "App is coming soon" state
 The site currently advertises the app as not yet released: a `.coming-soon` badge (styled in `styles.css`) appears in the home hero, both download banners, and the store buttons say "coming soon". When the app launches, remove the `.coming-soon` elements, restore the store button labels, update the download banner copy, and revisit the "When can I use FLIK2?" FAQ item.
 
 ### Placeholder content to replace before launch
-- All stats and both testimonials are fictional placeholders.
+- Waitlist-size and venue-count stats are placeholders; confirm or update them with real numbers. Launch city is Delhi NCR. The co-founder messages (Rohit and Neeraj, home page) are real content.
+- A stat can show text instead of an animated number: give `.stat-num` no `data-count` attribute (see the "Delhi NCR" stat).
 - App Store / Google Play buttons link to `#`; point them at real store URLs.
 - The QR code on the home page is a decorative CSS pattern (`.qr-box`); replace with a real QR `<img>`.
 - Footer Legal links (Privacy, Terms, Safety) link to `#`.
@@ -89,10 +90,10 @@ The site currently advertises the app as not yet released: a `.coming-soon` badg
 `script.js` has three small, independent parts, each commented:
 
 1. **Mobile nav toggle**: shows/hides `.nav-links` under 900px width via the `.open` class.
-2. **Scroll reveal**: an `IntersectionObserver` adds `.visible` to any element with class `.reveal` when it scrolls into view (animation defined in `styles.css`).
-3. **Stat counters**: an `IntersectionObserver` animates each `.stat-num` from 0 to its `data-count` value with easing.
+2. **Scroll reveal**: an `IntersectionObserver` adds `.visible` to any element with class `.reveal` when it scrolls into view (animation defined in `styles.css`). In-page anchor navigation reveals the target section instantly so users never land on a blank viewport, and anything already scrolled past is revealed on load.
+3. **Stat counters**: an `IntersectionObserver` animates each `.stat-num` from 0 to its `data-count` value with easing, formatted with en-US digit grouping.
 
-Every page includes a `<noscript>` fallback so content stays visible if JavaScript is disabled.
+Accessibility/robustness: every page has a `<noscript>` fallback so content stays visible without JavaScript (stat numbers ship in the HTML as final values), and `prefers-reduced-motion` disables reveals, smooth scrolling, and counter animation.
 
 ## Browser support
 
