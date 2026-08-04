@@ -1,1 +1,4 @@
 .claude/settings.local.json
+
+# Third-party guidelines repo cloned locally for reference; not part of the site
+andrej-karpathy-skills/
